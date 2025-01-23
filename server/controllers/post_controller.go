@@ -68,8 +68,15 @@ func CreatePost(c *gin.Context) {
 		return
 	}
 
-	// Respond with the created post
-	c.JSON(http.StatusCreated, gin.H{"message": "Post created successfully", "post": newPost})
+	// Retrieve the saved post with preloading
+	var createdPost models.Post
+	if err := db.Preload("User").Preload("Likes").First(&createdPost, newPost.ID).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error retrieving post with associations", "details": err.Error()})
+		return
+	}
+
+	// Respond with the created post including preloaded associations
+	c.JSON(http.StatusCreated, gin.H{"message": "Post created successfully", "post": createdPost})
 }
 
 // UpdatePost updates an existing post

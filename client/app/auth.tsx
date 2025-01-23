@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   StyleSheet,
   View,
@@ -12,11 +12,18 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/slices/user";
+import { setAccessToken } from '@/redux/slices/accessToken';
 import { Formik } from "formik";
 import * as Yup from "yup";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+
+  // Initial values
+  const initialValues = {
+    username: "janedoe",
+    password: "Extra004!"
+  }
   // Validation schema
   const validationSchema = Yup.object({
     username: Yup.string().required("Username is required"),
@@ -25,10 +32,10 @@ const LoginForm = () => {
       .required("Password is required"),
   });
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: { username: string, password: string }) => {
     try {
       const response = await fetch(
-        "https://e6cb-149-22-80-61.ngrok-free.app/login",
+        "https://742a-162-233-243-193.ngrok-free.app/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -39,8 +46,8 @@ const LoginForm = () => {
       const data = await response.json();
 
       if (response.ok) {
-        Alert.alert("Login successful", "You are now logged in.");
         dispatch(setUser(data.user));
+        dispatch(setAccessToken(data.token))
       } else {
         Alert.alert(
           "Login failed",
@@ -57,7 +64,7 @@ const LoginForm = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <Formik
-          initialValues={{ username: "janedoe", password: "Extra004!" }}
+          initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >

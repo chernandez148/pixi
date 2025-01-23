@@ -2,6 +2,7 @@ package routes
 
 import (
 	"pixi/controllers"
+	"pixi/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +14,7 @@ func PostRoutes(router *gin.Engine) {
 	postGroup.GET("", controllers.GetPost)
 
 	// Add POST route for creating a new post
-	postGroup.POST("", controllers.CreatePost)
+	postGroup.POST("", middleware.AuthRequired(), controllers.CreatePost)
 
 	// Add PATCH route for updating an existing post
 	postGroup.PATCH("/:id", controllers.UpdatePost)

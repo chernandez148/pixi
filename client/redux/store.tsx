@@ -1,11 +1,17 @@
-import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./slices/user";
-import feedReducer from "./slices/feed";
+import { configureStore } from '@reduxjs/toolkit';
+import userReducer from './slices/user'
+import postsReducer from './slices/posts'
+import fileNameReducer from './slices/fileName';
+import selectedImageReducer from './slices/seletecImage';
+import accessTokenReducer from './slices/accessToken';
 
 const store = configureStore({
   reducer: {
     user: userReducer,
-    feed: feedReducer,
+    posts: postsReducer,
+    fileName: fileNameReducer,
+    selectedImage: selectedImageReducer,
+    accessToken: accessTokenReducer
   },
 });
 
