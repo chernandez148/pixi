@@ -1,8 +1,9 @@
 import { PostState } from "./slices/posts";
 import { UserState } from "./slices/user";
-import { FileNameState } from "./slices/fileName";  
+import { FileNameState } from "./slices/fileName";
 import { AccessTokenState } from "./slices/accessToken";
 import { SelectedImageState } from "./slices/seletecImage";
+import { ToggleCommentsState } from "./slices/toggleComment";
 import store from "./store";
 
 export interface User {
@@ -34,12 +35,15 @@ export type FileName = string;
 
 export type SelectedImage = string;
 
+export type ToggleComments = boolean;
+
 export interface RootState {
   user: UserState;
   posts: PostState;
   fileName: FileNameState;
   selectedImage: SelectedImageState;
   accessToken: AccessTokenState;
+  toggleComments: ToggleCommentsState;
 }
 
 export type RootStackParamList = {
@@ -48,6 +52,7 @@ export type RootStackParamList = {
   post: undefined;
   videos: undefined;
   profile: undefined;
+  comments: undefined;
 };
 
 export type AppDispatch = typeof store.dispatch;

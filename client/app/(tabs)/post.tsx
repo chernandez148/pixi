@@ -1,16 +1,11 @@
 import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  Image,
-} from "react-native";
+import { View, StyleSheet, ActivityIndicator, Image } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, RootStackParamList } from "@/redux/types";
 import { setSelectedImage } from "@/redux/slices/seletecImage";
 import { useNavigation } from "@react-navigation/native";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import uploadImage from "../../utils/uploadImage";
@@ -20,11 +15,13 @@ type NavigationProp = BottomTabNavigationProp<RootStackParamList, "index">;
 
 export default function Post() {
   const [loading, setLoading] = useState(false);
-  const selectedImage = useSelector((state: RootState) => state.selectedImage.selectedImage)
+  const selectedImage = useSelector(
+    (state: RootState) => state.selectedImage.selectedImage
+  );
   const fileName = useSelector((state: RootState) => state.fileName?.fileName);
   const navigation = useNavigation<NavigationProp>();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // Get user from Redux
   const user = useSelector((state: RootState) => state.user.user); // Ensure state.user exists and has an ID

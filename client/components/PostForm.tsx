@@ -7,7 +7,7 @@ import {
   Alert,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { addPost } from "@/redux/slices/posts"
+import { addPost } from "@/redux/slices/posts";
 import { setSelectedImage } from "@/redux/slices/seletecImage";
 import { setFileName } from "@/redux/slices/fileName";
 import { RootState, RootStackParamList } from "@/redux/types";
@@ -24,7 +24,7 @@ function PostForm() {
     (state: RootState) => state.accessToken.accessToken
   );
   const navigation = useNavigation<NavigationProp>();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const imageURL = fileName
     ? `https://d11ykvxgoxy1to.cloudfront.net/${fileName}`
@@ -46,7 +46,7 @@ function PostForm() {
   ) => {
     try {
       const response = await fetch(
-        "https://742a-162-233-243-193.ngrok-free.app/posts",
+        "https://11cb-162-233-243-193.ngrok-free.app/posts",
         {
           method: "POST",
           headers: {
@@ -60,10 +60,9 @@ function PostForm() {
       const data = await response.json();
 
       if (response.ok) {
-        Alert.alert("Post successfully created!");
-        dispatch(addPost(data.post))
-        dispatch(setSelectedImage(""))
-        dispatch(setFileName(""))
+        dispatch(addPost(data.post));
+        dispatch(setSelectedImage(""));
+        dispatch(setFileName(""));
       } else {
         Alert.alert("Post submission failed", data.message || "Unknown error");
       }
@@ -96,6 +95,7 @@ function PostForm() {
               <TextInput
                 style={styles.input}
                 placeholder="Write a caption..."
+                placeholderTextColor="#f8f8f8"
                 value={values.caption}
                 onChangeText={handleChange("caption")}
                 onBlur={handleBlur("caption")}
@@ -127,13 +127,14 @@ const styles = StyleSheet.create({
   form: {
     justifyContent: "space-between",
     flexDirection: "column",
-    height: 250,
   },
   input: {
     marginTop: 25,
+    marginBottom: 50,
     padding: 10,
     borderBottomWidth: 1,
     borderColor: "#ccc",
+    color: "#fff",
   },
   errorText: {
     color: "red",
@@ -142,16 +143,15 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   button: {
-    padding: 10,
-    backgroundColor: "#000",
-    borderRadius: 5,
+    padding: 15,
+    backgroundColor: "#1b2021",
+    borderRadius: 50,
     alignItems: "center",
-    margin: 10,
   },
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 14,
+    fontSize: 18,
   },
 });
 

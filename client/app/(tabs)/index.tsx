@@ -1,7 +1,6 @@
 import {
   View,
   StyleSheet,
-  Text,
   Image,
   SafeAreaView,
   ScrollView,
@@ -11,11 +10,11 @@ import Feed from "@/components/Feed";
 export default function HomeScreen() {
   return (
     <SafeAreaView>
-      <ScrollView >
+      <ScrollView>
         <View style={styles.homeScreen}>
           <View style={styles.homeScreenHeader}>
             <Image
-              source={require("../../assets/images/pixi_logo.png")}
+              source={require("../../assets/images/pixi_logo_white.png")}
               style={styles.logo}
               resizeMode="contain"
             />
@@ -33,11 +32,11 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   homeScreen: {
     flex: 1,
-    backgroundColor: "#0e1111"
+    backgroundColor: "#1B1B1B",
   },
   homeScreenHeader: {
     paddingTop: 20,
-    paddingStart: 5
+    paddingStart: 5,
   },
   logo: {
     width: 75,

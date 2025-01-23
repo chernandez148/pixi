@@ -1,22 +1,25 @@
 import React from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
-} from "react-native";
+import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/types";
+import { RootStackParamList, RootState } from "@/redux/types";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack"; // Import StackNavigationProp
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Feather from "@expo/vector-icons/Feather";
 import PostData from "@/data/PostData";
 
+// Update the type to use StackNavigationProp
+type NavigationProp = StackNavigationProp<RootStackParamList, "index">;
+
 export default function Feed() {
   const posts = useSelector((state: RootState) => state.posts.posts);
   const user = useSelector((state: RootState) => state.user.user);
+  const navigation = useNavigation<NavigationProp>(); // Use the stack navigation prop
+
+  const handleComments = () => {
+    console.log("Navigating to Comments screen");
+    navigation.navigate("comments"); // Navigate to the Comments screen
+  };
 
   return (
     <View>
@@ -39,10 +42,15 @@ export default function Feed() {
                   <FontAwesome name="heart-o" size={20} color="white" />
                 )}
                 {Array.isArray(post.Likes) && post.Likes.length > 0 && (
-                  <Text style={{ marginStart: 5 }}>{post.Likes.length}</Text>
+                  <Text style={{ marginStart: 5, color: "#fff" }}>
+                    {post.Likes.length}
+                  </Text>
                 )}
               </TouchableOpacity>
-              <TouchableOpacity style={{ marginEnd: 8 }}>
+              <TouchableOpacity
+                style={{ marginEnd: 8 }}
+                onPress={() => handleComments()}
+              >
                 <FontAwesome name="comment-o" size={20} color="white" />
               </TouchableOpacity>
               <TouchableOpacity>
@@ -64,11 +72,11 @@ export default function Feed() {
 
 const styles = StyleSheet.create({
   post: {
-    backgroundColor: "#0e1111",
+    backgroundColor: "#1B1B1B",
   },
   postImage: {
     width: "100%",
-    height: 300,
+    height: 400,
     objectFit: "cover",
   },
   postActions: {
@@ -86,12 +94,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginEnd: 5,
     fontWeight: "bold",
-    color: "#fff"
-
+    color: "#fff",
   },
   caption: {
     fontSize: 12,
     color: "#f2f2f2",
-    paddingBottom: 20
+    paddingBottom: 20,
   },
 });

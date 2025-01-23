@@ -11,7 +11,7 @@ export default function PostData() {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://742a-162-233-243-193.ngrok-free.app/posts",
+        "https://11cb-162-233-243-193.ngrok-free.app/posts",
         {
           method: "GET",
           headers: {
@@ -36,9 +36,5 @@ export default function PostData() {
     fetchPosts();
   }, []);
 
-  return (
-    <View>
-      {loading ? <Text>Loading</Text> : null}
-    </View>
-  );
+  return <View>{loading ? <Text>Loading</Text> : null}</View>;
 }
