@@ -17,10 +17,10 @@ func PostRoutes(router *gin.Engine) {
 	postGroup.POST("", middleware.AuthRequired(), controllers.CreatePost)
 
 	// Add PATCH route for updating an existing post
-	postGroup.PATCH("/:id", controllers.UpdatePost)
+	router.PATCH("/post/:id", controllers.UpdatePost)
 
 	// Add GET route for retrieving a post by ID
-	postGroup.GET("/:id", controllers.GetPost)
+	router.GET("/post/:id", controllers.GetPostByID)
 
 	// Add DELETE route for deleting a post by ID
 	postGroup.DELETE("/:id", controllers.DeletePost)

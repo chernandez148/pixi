@@ -125,17 +125,20 @@ func UpdatePost(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Post updated successfully", "post": existingPost})
 }
 
-// GetPost retrieves the post by ID
+// GetPostByID retrieves the post by ID
 func GetPostByID(c *gin.Context) {
 	db := config.GetDB() // Get DB connection
 	var post models.Post
-	postID := c.Param("id") //Get the post ID from the URL params
+	postID := c.Param("id") // Get the post ID from the URL params
 
-	if err := db.First(&post, postID).Error; err != nil {
+	// Ensure the postID is an integer or valid for comparison in the query
+	if err := db.Preload("Comments").Where("id = ?", postID).First(&post).Error; err != nil {
+		// If the post is not found, return a 404 error
 		c.JSON(http.StatusNotFound, gin.H{"error": "Post not found"})
 		return
 	}
 
+	// Return the post as JSON
 	c.JSON(http.StatusOK, post)
 }
 
